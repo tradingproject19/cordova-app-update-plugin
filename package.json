@@ -1,6 +1,6 @@
 {
   "name": "cordova-in-app-update",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "An Android Cordova plugin that allows users to update app to letest version without leaving the application",
   "cordova": {
     "id": "cordova-in-app-update",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Fasal-Tech/cordova-app-update-plugin.git"
+    "url": "git+https://github.com/itsLucario/cordova-app-update-plugin.git"
   },
   "main": "index.js",
   "scripts": {
@@ -23,10 +23,10 @@
     "name": "cordova",
     "version": ">=6.0.0"
   }],
-  "author": "Dhaval Chaudhary <mr.spark2591@gmail.com>",
+  "author": "Dhaval Chaudhary <mr.spark2591@gmail.com>, itsLucario",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Fasal-Tech/cordova-app-update-plugin/issues"
+    "url": "https://github.com/itsLucario/cordova-app-update-plugin/issues"
   },
-  "homepage": "https://github.com/Fasal-Tech/cordova-app-update-plugin/"
+  "homepage": "https://github.com/itsLucario/cordova-app-update-plugin/"
 }
