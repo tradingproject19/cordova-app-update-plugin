@@ -20,7 +20,7 @@
     </js-module>
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="InAppUpdate">
+            <feature name="UpdatePlugin">
                 <param name="android-package" value="com.mrspark.cordova.plugin.UpdatePlugin"/>
             </feature>
         </config-file>
