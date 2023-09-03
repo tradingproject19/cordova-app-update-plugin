@@ -19,5 +19,5 @@ InAppUpdate.prototype.update = function(successCallback, errorCallback, config) 
 // };
 
 // cordova.addConstructor(InAppUpdate.install);
-var clipboard = new Clipboard();
-module.exports = clipboard;
+var inAppUpdate = new InAppUpdate();
+module.exports = inAppUpdate;
