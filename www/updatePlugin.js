@@ -14,14 +14,12 @@ InAppUpdate.prototype.check = function(successCallback, errorCallback, config) {
 }
 
 // Installation constructor that binds updatePlugin to window
-// InAppUpdate.install = function() {
-  // if (!window.plugins) {
-    // window.plugins = {};
-  // }
-  // window.plugins.InAppUpdate = new InAppUpdate();
-  // return window.plugins.InAppUpdate;
-// };
+ InAppUpdate.install = function() {
+   if (!window.plugins) {
+     window.plugins = {};
+   }
+   window.plugins.InAppUpdate = new InAppUpdate();
+  return window.plugins.InAppUpdate;
+ };
 
-// cordova.addConstructor(InAppUpdate.install);
-var inAppUpdate = new InAppUpdate();
-module.exports = inAppUpdate;
+ cordova.addConstructor(InAppUpdate.install);
