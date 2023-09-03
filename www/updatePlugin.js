@@ -10,12 +10,14 @@ InAppUpdate.prototype.update = function(successCallback, errorCallback, config) 
 }
 
 // Installation constructor that binds updatePlugin to window
-InAppUpdate.install = function() {
-  if (!window.plugins) {
-    window.plugins = {};
-  }
-  window.plugins.InAppUpdate = new InAppUpdate();
-  return window.plugins.InAppUpdate;
-};
+// InAppUpdate.install = function() {
+  // if (!window.plugins) {
+    // window.plugins = {};
+  // }
+  // window.plugins.InAppUpdate = new InAppUpdate();
+  // return window.plugins.InAppUpdate;
+// };
 
-cordova.addConstructor(InAppUpdate.install);
+// cordova.addConstructor(InAppUpdate.install);
+var clipboard = new Clipboard();
+module.exports = clipboard;
