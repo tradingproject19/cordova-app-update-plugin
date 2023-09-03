@@ -1,7 +1,3 @@
-android {
-	compileSdkVersion 33
-}
-
 allprojects {
      repositories {
         maven {
