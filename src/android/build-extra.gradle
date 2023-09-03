@@ -1,5 +1,5 @@
 android {
-	compileSdkVersion 31
+	compileSdkVersion 33
 }
 
 allprojects {
@@ -11,6 +11,6 @@ allprojects {
 }
 
 dependencies {
- 	implementation 'com.google.android.play:core:1.7.3'
- 	implementation 'com.android.support:design:25.0.1'
+ 	implementation 'com.google.android.play:core:+'
+ 	implementation 'com.android.support:design:+'
 }
