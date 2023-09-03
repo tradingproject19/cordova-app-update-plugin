@@ -16,7 +16,7 @@
     </engines>
   
     <js-module src="www/updatePlugin.js" name="UpdatePlugin">
-        <clobbers target="window.plugins.updatePlugin" />
+        <clobbers target="window.plugins.InAppUpdate" />
     </js-module>
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
