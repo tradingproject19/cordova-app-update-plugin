@@ -9,6 +9,10 @@ InAppUpdate.prototype.update = function(successCallback, errorCallback, config) 
   exec(successCallback, errorCallback, 'UpdatePlugin', 'update', [{ 'flexibleUpdateStalenessDays': config.flexibleUpdateStalenessDays, 'immediateUpdateStalenessDays': config.immediateUpdateStalenessDays }]);
 }
 
+InAppUpdate.prototype.check = function(successCallback, errorCallback, config) {
+  exec(successCallback, errorCallback, 'UpdatePlugin', 'check', [{ 'flexibleUpdateStalenessDays': config.flexibleUpdateStalenessDays, 'immediateUpdateStalenessDays': config.immediateUpdateStalenessDays }]);
+}
+
 // Installation constructor that binds updatePlugin to window
 // InAppUpdate.install = function() {
   // if (!window.plugins) {
