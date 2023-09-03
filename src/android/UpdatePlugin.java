@@ -83,51 +83,76 @@ public class UpdatePlugin extends CordovaPlugin {
     @Override
     public boolean execute(final String action, final JSONArray args, final CallbackContext callbackContext) {
             // Verify that the user sent a "show" action
-            if (!action.equals("update")) {
-                    callbackContext.error("\"" + action + "\" is not a recognized action.");
-                    return false;
-            }
-            try {
-                    final JSONObject argument = args.getJSONObject(0);
-                    DAYS_FOR_FLEXIBLE_UPDATE = Integer.parseInt(argument.getString("flexibleUpdateStalenessDays"));
-                    DAYS_FOR_IMMEDIATE_UPDATE = Integer.parseInt(argument.getString("immediateUpdateStalenessDays"));
-            } catch (final JSONException e) {
-                    e.printStackTrace();
-            }
-            final Context context = this.cordova.getContext();
-            appUpdateManager = AppUpdateManagerFactory.create(context);
-            final Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+            if (action.equals("update")) {
+              try {
+                final JSONObject argument = args.getJSONObject(0);
+                DAYS_FOR_FLEXIBLE_UPDATE = Integer.parseInt(argument.getString("flexibleUpdateStalenessDays"));
+                DAYS_FOR_IMMEDIATE_UPDATE = Integer.parseInt(argument.getString("immediateUpdateStalenessDays"));
+              } catch (final JSONException e) {
+                e.printStackTrace();
+              }
+              final Context context = this.cordova.getContext();
+              appUpdateManager = AppUpdateManagerFactory.create(context);
+              final Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
 
-            try {
-                    appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
-                            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                                            && appUpdateInfo.updatePriority() >= HIGH_PRIORITY_UPDATE
-                                            && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
-                                    checkForUpdate(AppUpdateType.IMMEDIATE, appUpdateInfo);
-                            } else if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                                            && appUpdateInfo.updatePriority() >= MEDIUM_PRIORITY_UPDATE
-                                            && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
-                                    checkForUpdate(AppUpdateType.FLEXIBLE, appUpdateInfo);
-                            } else if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                                            && appUpdateInfo.clientVersionStalenessDays() != null
-                                            && appUpdateInfo.clientVersionStalenessDays() >= DAYS_FOR_IMMEDIATE_UPDATE
-                                            && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
-                                    checkForUpdate(AppUpdateType.IMMEDIATE, appUpdateInfo);
-                            } else if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                                            && appUpdateInfo.clientVersionStalenessDays() != null
-                                            && appUpdateInfo.clientVersionStalenessDays() >= DAYS_FOR_FLEXIBLE_UPDATE
-                                            && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
-                                    checkForUpdate(AppUpdateType.FLEXIBLE, appUpdateInfo);
-                            }
+              try {
+                appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+                  if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                    && appUpdateInfo.updatePriority() >= HIGH_PRIORITY_UPDATE
+                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+                    checkForUpdate(AppUpdateType.IMMEDIATE, appUpdateInfo);
+                  } else if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                    && appUpdateInfo.updatePriority() >= MEDIUM_PRIORITY_UPDATE
+                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                    checkForUpdate(AppUpdateType.FLEXIBLE, appUpdateInfo);
+                  } else if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                    && appUpdateInfo.clientVersionStalenessDays() != null
+                    && appUpdateInfo.clientVersionStalenessDays() >= DAYS_FOR_IMMEDIATE_UPDATE
+                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+                    checkForUpdate(AppUpdateType.IMMEDIATE, appUpdateInfo);
+                  } else if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                    && appUpdateInfo.clientVersionStalenessDays() != null
+                    && appUpdateInfo.clientVersionStalenessDays() >= DAYS_FOR_FLEXIBLE_UPDATE
+                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                    checkForUpdate(AppUpdateType.FLEXIBLE, appUpdateInfo);
+                  }
 
-                            PluginResult pluginResult = new PluginResult(PluginResult.Status.OK,
-                                            appUpdateInfo.toString());
-                            callbackContext.sendPluginResult(pluginResult);
-                    });
-            } catch (final Exception e) {
+                  PluginResult pluginResult = new PluginResult(PluginResult.Status.OK,
+                    appUpdateInfo.toString());
+                  callbackContext.sendPluginResult(pluginResult);
+                });
+              } catch (final Exception e) {
+                e.printStackTrace();
+              }
+              return true;
+          }else if(action.equals("check")){
+              final AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(this.cordova.getContext());
+              final Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+
+              appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+                if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                  final String playStoreVersion = appUpdateInfo.availableVersionCode() + "";
+                  final JSONObject result = new JSONObject();
+                  try {
+                    result.put("playStoreVersion", playStoreVersion);
+                    callbackContext.success(result);
+                  } catch (JSONException e) {
                     e.printStackTrace();
-            }
+                    callbackContext.error("Failed to retrieve Play Store version.");
+                  }
+                } else {
+                  callbackContext.error("No updates available in the Play Store.");
+                }
+              });
+
+              appUpdateInfoTask.addOnFailureListener(e -> {
+                e.printStackTrace();
+                callbackContext.error("Failed to retrieve Play Store version.");
+              });
             return true;
+      } else{
+            return false;
+      }
     }
 
     @Override
