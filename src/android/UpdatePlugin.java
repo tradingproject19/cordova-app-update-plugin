@@ -130,24 +130,28 @@ public class UpdatePlugin extends CordovaPlugin {
               final Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
 
               appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
-                if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                /*if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {*/
                   final String playStoreVersion = appUpdateInfo.availableVersionCode() + "";
                   final JSONObject result = new JSONObject();
                   try {
-                    result.put("playStoreVersion", playStoreVersion);
+                    result.put("availableVersionCode", playStoreVersion);
+                    result.put("updateAvailability", appUpdateInfo.updateAvailability());
+                    result.put("installStatus", appUpdateInfo.installStatus());
+                    result.put("totalBytesToDownload", appUpdateInfo.totalBytesToDownload());
+                    result.put("bytesDownloaded", appUpdateInfo.bytesDownloaded());
                     callbackContext.success(result);
                   } catch (JSONException e) {
                     e.printStackTrace();
-                    callbackContext.error("Failed to retrieve Play Store version.");
+                    callbackContext.error("Failed to retrieve Play Store version."  + e.getMessage());
                   }
-                } else {
+                /*} else {
                   callbackContext.error("No updates available in the Play Store.");
-                }
+                }*/
               });
 
               appUpdateInfoTask.addOnFailureListener(e -> {
                 e.printStackTrace();
-                callbackContext.error("Failed to retrieve Play Store version.");
+                callbackContext.error("Failed to retrieve Play Store version." + e.getMessage());
               });
             return true;
       } else{
