@@ -1,5 +1,3 @@
-cordova.define("cordova-in-app-update.InAppUpdate", function(require, exports, module) {
-// Empty constructor
 var exec = require('cordova/exec');
 
 function InAppUpdate() {}
@@ -28,5 +26,3 @@ InAppUpdate.prototype.check = function(successCallback, errorCallback) {
  };
 
  cordova.addConstructor(InAppUpdate.install);
-
-});
