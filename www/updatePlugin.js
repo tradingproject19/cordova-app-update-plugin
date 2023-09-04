@@ -1,3 +1,4 @@
+cordova.define("cordova-in-app-update.InAppUpdate", function(require, exports, module) {
 // Empty constructor
 var exec = require('cordova/exec');
 
@@ -5,8 +6,12 @@ function InAppUpdate() {}
 
 // The function that passes work along to native shells
 // Message is a string, duration may be 'long' or 'short'
-InAppUpdate.prototype.update = function(successCallback, errorCallback, config) {
-  exec(successCallback, errorCallback, 'UpdatePlugin', 'update', [{ 'flexibleUpdateStalenessDays': config.flexibleUpdateStalenessDays, 'immediateUpdateStalenessDays': config.immediateUpdateStalenessDays }]);
+InAppUpdate.prototype.update = function(successCallback, errorCallback) {
+config = {type: "FLEXIBLE",
+        flexibleUpdateStalenessDays: 2,
+        immediateUpdateStalenessDays: 5
+        }
+  exec(successCallback, errorCallback, 'UpdatePlugin', 'update', config);
 }
 
 InAppUpdate.prototype.check = function(successCallback, errorCallback) {
@@ -23,3 +28,5 @@ InAppUpdate.prototype.check = function(successCallback, errorCallback) {
  };
 
  cordova.addConstructor(InAppUpdate.install);
+
+});
