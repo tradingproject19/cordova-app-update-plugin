@@ -25,6 +25,8 @@
             </feature>
         </config-file>
         <framework src="src/android/build-extra.gradle" custom="true" type="gradleReference" />
+        <framework src="com.google.android.play:core:+" />
+        <framework src="com.android.support:design:+" />
         <source-file src="src/android/UpdatePlugin.java" target-dir="src/com/mrspark/cordova/plugin" />
     </platform>
 </plugin>
