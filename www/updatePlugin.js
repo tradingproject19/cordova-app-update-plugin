@@ -4,7 +4,7 @@ function InAppUpdate() {}
 
 // The function that passes work along to native shells
 // Message is a string, duration may be 'long' or 'short'
-InAppUpdate.prototype.update = function(successCallback, errorCallback, config) {
+InAppUpdate.prototype.update = function(config, successCallback, errorCallback) {
   exec(successCallback, errorCallback, 'UpdatePlugin', 'update', [{ 'flexibleUpdateStalenessDays': 2, 'immediateUpdateStalenessDays': 5, 'type': 'IMMEDIATE' }]);
 }
 
