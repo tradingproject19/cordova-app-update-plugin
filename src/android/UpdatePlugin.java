@@ -33,8 +33,8 @@ public class UpdatePlugin extends CordovaPlugin {
     private static String IN_APP_UPDATE_TYPE = "FLEXIBLE";
     private static Integer DAYS_FOR_FLEXIBLE_UPDATE = 0;
     private static Integer DAYS_FOR_IMMEDIATE_UPDATE = 0;
-    private static Integer HIGH_PRIORITY_UPDATE = 5;
-    private static Integer MEDIUM_PRIORITY_UPDATE = 0;
+    private static Integer HIGH_PRIORITY_UPDATE = 0;
+    private static Integer MEDIUM_PRIORITY_UPDATE = 1;
     private static AppUpdateManager appUpdateManager;
     private static InstallStateUpdatedListener listener;
     private FrameLayout layout;
