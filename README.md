@@ -1,4 +1,6 @@
 # cordova-in-app-update
+This plugin is now compatible with ionic.
+
 This pluging enabels [In app update](https://developer.android.com/guide/playcore/in-app-updates) For cordova.
 
 ## Supports
